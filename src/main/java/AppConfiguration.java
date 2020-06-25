@@ -1,4 +1,6 @@
 import codegym.repository.UserRepository;
+import codegym.service.UserService;
+import codegym.service.impl.UserServiceImpl;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.InitializingBean;
@@ -84,7 +86,7 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
         em.setPackagesToScan(new String[]{"codegym.model"});
@@ -98,7 +100,7 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/cms");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/cms?autoReconnect=true&useSSL=false");
         dataSource.setUsername("root");
         dataSource.setPassword("1234");
         return dataSource;
@@ -127,7 +129,10 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
 
 
 
-
+    @Bean
+    public UserService userService(){
+        return new UserServiceImpl();
+    }
 //    @Bean
 //    public CustomerRepositoryImpl customerRepository() {
 //        return new CustomerRepositoryImpl();

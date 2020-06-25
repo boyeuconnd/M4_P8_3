@@ -22,11 +22,11 @@ public class User implements Validator {
     private Long id;
 
     @NotEmpty
-    @Size(min = 5, max = 45)
+    @Size(min = 2, max = 45)
     private String firstName;
 
     @NotEmpty
-    @Size(min = 5,max = 45)
+    @Size(min = 2,max = 45)
     private String lastName;
 
 
